@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor HLS</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body>
+    <h1>Reproductor HLS</h1>
+    <video id="video" controls autoplay style="width: 100%; max-width: 600px;"></video>
+    <script>
+        var video = document.getElementById('video');
+        var videoSrc = "https://video-weaver.scl01.hls.live-video.net/v1/playlist/CtYFxOrAGYrT933dURgTbNU4APZOWyzD2WsY7DJgKIwVxwzgnOOlqVaoMYS9jFCq6xksQBibp7g0JiEPmBxFeafGDen1CNI7R_Y2P8IZBoemIrj4TWZ34TDnVOL3kgpE1guHb15xR7wHziU9FENWuNp2ouDw_L7Jfa63fAY24Ts4ttiFDNVFOro9pZ2Q-Py0ysoUDFkJkU3skYniWTQmYeeUDPG3HOAc9s_7tlBxE7xh6AJ2Sb4rePJFVKexgymkWZ3WuDLVTQ7FVM0yaAunYPzw5Gc5Krcor-LVxvU_AKrU5zdQmkYAYzqmDFokJ8DlFy02aUZBiiQkhD71LTu7JQ9_0nKBTZKGfTj99HjUW2TqXUMlUrCnB5irJo4ZR1eAopxIDAQfadUCrJEVQDW1y51ZpQjDFj2weXOTXK77YOL4plffqGPiwyALwF7Bux7BBvfhuwP_CuhnKwGOgLcp1Q9sRjshwDK9Czg2wW1fHN9Aft3sp-R8Q-ZDxj31xGE6bwmvOIZbUVxyjJ1EaNQ8dmR7wo3uKbf1pjcbx5QyMTc0LnJ7PmmZmkdExEb0CXU6i8ZAb00ahw1h7_dGsnU-favbrwqB9KYUEEb2URs4o2KD5p4PYjvVbAH-6vhU1rKZPf3mpou3Wl2_NM8mFOKPmjQxSNN3tOZq7OewoGVo1Qcl1jC-6BfqphRxjTTWyzpviHGT7MeiAf1BUrSltSUE2-GWr4xsNUz30KXd5dxMZdKIloJ-1EBo0Xg0wQICTCBZpxp2YUhoHQjZZs4bN-66FAbuoKKqR_9uPtBc7CS9rzzs5W7g964y_1NtYaBVp72lB_dd-Ig-zaoBnCkfSPGlwD8YE6jM7FjMb_G9AiSZzW40J55Rm94meNrZFSl3WqYzaXhiVgvOjkMUNhhYoNLewngjZX0nXc2Iy589598PPu2HYI-6D8SIB0BBE5QSKmfAWRXPOjkKjEg5Ggx3C9HQh5axexwWGCYgASoJdXMtZWFzdC0xMMgJ.m3u8";
+
+        if (Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                video.play();
+            });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function () {
+                video.play();
+            });
+        } else {
+            alert("Tu navegador no soporta HLS.");
+        }
+    </script>
+</body>
+</html>
